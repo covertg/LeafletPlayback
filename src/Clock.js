@@ -14,13 +14,15 @@ L.Playback.Clock = L.Class.extend({
   },
 
   _tick: function (self) {
-    if (self._cursor > self._trackController.getEndTime()) {
-      clearInterval(self._intervalID);
-      return;
-    }
     self._trackController.tock(self._cursor, self._transitionTime);
+    if (self._cursor >= self._trackController.getEndTime()) {
+      self.stop();
+    }
     self._callbacks(self._cursor);
     self._cursor += self._tickLen;
+    if (self._cursor > self._trackController.getEndTime()) {
+      self._cursor = self._trackController.getEndTime();
+    }
   },
 
   _callbacks: function(cursor) {
