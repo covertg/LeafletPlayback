@@ -8,21 +8,21 @@ Leaflet Playback provides the ability to replay GPS Tracks in the form of GeoJSO
 
 Basic example of LeafletPlayback plugin, that pre-loads some GPS GeoJSON tracks and lets you play them back.
 
-### [Example 1](http://leafletplayback.theoutpost.io/examples/example_1.html)
+### Example 1
 
 Use vis.js timeline as slider control.
 
-### [Example 2](http://leafletplayback.theoutpost.io/examples/example_2.html)
+### Example 2
 
 Custom interface example - Includes the usage of Maki Markers and Twitter Bootstrap.
 
 ### Example 3
 
-Using GPX loading.
+Shows the ability to have markers orient themselves to the bearing of the track.
 
 ### Example 4
 
-Shows the ability to have markers orient themselves to the bearing of the track.
+Using GPX loading.
 
 ### Example 5
 
