@@ -9,20 +9,19 @@ L.Playback.Clock = L.Class.extend({
     L.setOptions(this, options);
     this._speed = this.options.speed;
     this._tickLen = this.options.tickLen;
-    this._cursor = trackController.getStartTime();
+    this._cursor = this._trackController.getStartTime();
     this._transitionTime = this._tickLen / this._speed;
   },
 
   _tick: function (self) {
     self._trackController.tock(self._cursor, self._transitionTime);
     if (self._cursor >= self._trackController.getEndTime()) {
+      self.setCursor(self._trackController.getEndTime());
       self.stop();
+    } else {
+      self._cursor += self._tickLen;
     }
     self._callbacks(self._cursor);
-    self._cursor += self._tickLen;
-    if (self._cursor > self._trackController.getEndTime()) {
-      self._cursor = self._trackController.getEndTime();
-    }
   },
 
   _callbacks: function(cursor) {
@@ -37,7 +36,10 @@ L.Playback.Clock = L.Class.extend({
   },
 
   start: function () {
-    if (this._intervalID) return;
+    if (this.isPlaying()) return;
+    if (this._cursor >= this._trackController.getEndTime())
+        this.setCursor(this._trackController.getStartTime());
+    this.playControl._button.innerHTML = 'Stop';
     this._intervalID = window.setInterval(
       this._tick, 
       this._transitionTime, 
@@ -45,9 +47,10 @@ L.Playback.Clock = L.Class.extend({
   },
 
   stop: function () {
-    if (!this._intervalID) return;
+    if (!this.isPlaying()) return;
     clearInterval(this._intervalID);
     this._intervalID = null;
+    this.playControl._button.innerHTML = 'Play';
   },
 
   getSpeed: function() {
@@ -61,7 +64,7 @@ L.Playback.Clock = L.Class.extend({
   setSpeed: function (speed) {
     this._speed = speed;
     this._transitionTime = this._tickLen / speed;
-    if (this._intervalID) {
+    if (this.isPlaying()) {
       this.stop();
       this.start();
     }

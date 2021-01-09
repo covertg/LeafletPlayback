@@ -73,11 +73,11 @@ L.Playback.PlayControl = L.Control.extend({
         function play(){
             if (playback.isPlaying()) {
                 playback.stop();
-                self._button.innerHTML = 'Play';
+                // self._button.innerHTML = 'Play';
             }
             else {
                 playback.start();
-                self._button.innerHTML = 'Stop';
+                // self._button.innerHTML = 'Stop';
             }                
         }
 
